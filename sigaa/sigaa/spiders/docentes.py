@@ -1,3 +1,4 @@
+# cd sigaa & & uv run scrapy runspider .\sigaa\spiders\docentes.py -o data\docentes\docentes.json
 import scrapy
 
 
@@ -5,7 +6,7 @@ class DocentesSpider(scrapy.Spider):
     name = "docentes"
     allowed_domains = ["sigaa.unb.br"]
     start_urls = [
-        "https://sigaa.unb.br/sigaa/public/docente/busca_docentes.jsf?aba=p-academico"]
+        "https://sigaa.unb.br/sigaa/public/docente/busca_docentes.jsf"]
 
     def parse(self, response):
         departamentos = response.css("select#form\\:departamento option")
@@ -33,27 +34,49 @@ class DocentesSpider(scrapy.Spider):
         departamento_nome = response.meta['departamento_nome']
         departamento_id = response.meta['departamento_id']
 
+        # Verificar se há resultados
+        tabela_resultados = response.css("table.listagem")
+        if not tabela_resultados:
+            self.logger.info(f"Nenhum docente encontrado para {departamento_nome}")
+            return
+
         # Extrair docentes da tabela de resultados
-        for docente in response.css("table.listing tr"):
-            # Pular cabeçalho da tabela
-            if docente.css("th"):
-                continue
-                
-            nome = docente.css("td:nth-child(1) a::text").get()
-            link_pagina = docente.css("td:nth-child(1) a::attr(href)").get()
-            situacao = docente.css("td:nth-child(2)::text").get()
-            
+        linhas_docentes = response.css("table.listagem tbody tr")
+
+        for linha in linhas_docentes:
+            # Extrair nome do docente
+            nome = linha.css("td:nth-child(2) span.nome::text").get()
+
             if nome:
-                if link_pagina and not link_pagina.startswith('http'):
-                    link_pagina = response.urljoin(link_pagina)
-                    
+                # Extrair link da página pública
+                link_pagina = linha.css("td:nth-child(2) span.pagina a::attr(href)").get()
+
+                # Extrair SIAPE do link se disponível
+                siape = None
+                if link_pagina:
+                    if link_pagina and not link_pagina.startswith('http'):
+                        link_pagina = response.urljoin(link_pagina)
+
+                    # Extrair SIAPE do parâmetro da URL
+                    if "siape=" in link_pagina:
+                        siape = link_pagina.split("siape=")[1].split("&")[0]
+
+                # Extrair URL da foto (se disponível)
+                foto_url = linha.css("td.foto img::attr(src)").get()
+                if foto_url and not foto_url.startswith('http'):
+                    foto_url = response.urljoin(foto_url)
+
                 yield {
-                    'codigo': departamento_id,
-                    'unidade': departamento_nome,
-                    'docente': nome.strip(),
-                    'link_pagina': link_pagina,
-                    'situacao': situacao.strip() if situacao else None
+                    'codigo_departamento': departamento_id,
+                    'departamento': departamento_nome,
+                    'nome_docente': nome.strip(),
+                    'siape': siape,
+                    'link_pagina_publica': link_pagina,
+                    'url_foto': foto_url
                 }
 
-#> cd sigaa
-# > uv run scrapy runspider .\sigaa\spiders\docentes.py -o data\docentes\docentes_completo.json
+# Para rodar:
+# cd sigaa
+# uv run scrapy runspider .\sigaa\spiders\docentes.py -o data\docentes\docentes_completo.json
+
+
