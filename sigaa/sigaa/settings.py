@@ -85,3 +85,13 @@ DOWNLOAD_DELAY = 1
 
 # Set settings whose default value is deprecated to a future-proof value
 FEED_EXPORT_ENCODING = "utf-8"
+
+# Configurações atuais - PROCESSAMENTO SEQUENCIAL (1 por vez)
+CONCURRENT_REQUESTS_PER_DOMAIN = 1  # Apenas 1 requisição simultânea
+DOWNLOAD_DELAY = 1                   # 1 segundo entre requisições
+
+# Para PROCESSAMENTO PARALELO, você poderia usar:
+# CONCURRENT_REQUESTS_PER_DOMAIN = 5   # 5 requisições simultâneas
+# DOWNLOAD_DELAY = 0.5                 # 0.5 segundos entre requisições
+# 
+# ⚠️ CUIDADO: Muito paralelismo pode sobrecarregar o servidor SIGAA!
