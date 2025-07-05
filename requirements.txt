@@ -20,3 +20,4 @@ Brotli>=1.1.0
 defusedxml>=0.7.1
 idna>=3.7
 six>=1.16.0
+ipykernel>=6.29.5
