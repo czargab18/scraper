@@ -1,7 +1,7 @@
 # cd sigaa
 #
 # === COMANDO PRINCIPAL (TUDO EM UM) ===
-# uv run scrapy runspider .\sigaa\spiders\docentes_completo.py -o data\docentes\docentes_test.jsonl
+# uv run scrapy runspider .\\sigaa\\spiders\\docentes_completo.py -o data\\docentes\\docentes_test.jsonl
 #
 # === COMANDOS INDIVIDUAIS (OPCIONAIS) ===
 # uv run scrapy crawl departamentos -o data/departamentos/lista_departamentos.jsonl
@@ -635,7 +635,7 @@ class DocentesOrquestradorSpider(scrapy.Spider):
     3. Baixa páginas individuais
     4. Extrai dados completos
     
-    USO: uv run scrapy runspider .\sigaa\spiders\docentes_completo.py -o data\docentes\docentes_test.jsonl
+    USO: uv run scrapy runspider .\\sigaa\\spiders\\docentes_completo.py -o data\\docentes\\docentes_test.jsonl
     """
     name = "docentes_orquestrador"
     allowed_domains = ["sigaa.unb.br"]
@@ -1034,6 +1034,6 @@ if __name__ == "__main__":
         print("🔧 SPIDER DOCENTES COMPLETO")
         print("=" * 50)
         print("📋 USO:")
-        print("  🕷️ Spider: uv run scrapy runspider .\\sigaa\\spiders\\docentes_completo.py -o data\\docentes\\docentes_test.jsonl")
+        print("  🕷️ Spider: uv run scrapy runspider .\\\\sigaa\\\\spiders\\\\docentes_completo.py -o data\\\\docentes\\\\docentes_test.jsonl")
         print("  🔧 Gerenciar: python .\\sigaa\\spiders\\docentes_completo.py gerenciar")
         print("=" * 50)
