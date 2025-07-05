@@ -511,4 +511,3 @@ class DocentesConteudoSpider(scrapy.Spider):
         if self.processados < self.total_docentes:
             falhas = self.total_docentes - self.processados
             self.logger.warning(f"   ⚠️ Falhas/Não processados: {falhas}")
-
