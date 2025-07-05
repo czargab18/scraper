@@ -5,9 +5,18 @@
 Script para converter arquivos JSONL para CSV
 Lê arquivos .jsonl e converte as informações para formato CSV
 
+O script detecta automaticamente o formato dos dados:
+- Formato padrão: dados estruturados com múltiplas propriedades
+- Formato departamentos: objetos com ID numérico e nome do departamento
+
 Exemplo de uso:
     python transformar.py input.jsonl output.csv
     python transformar.py --input data/cursos/cursos.jsonl --output cursos.csv
+    python transformar.py data/unidades/departamentos.jsonl departamentos.csv
+    
+Exemplos de formatos suportados:
+    Cursos: {"sigla_departamento": "ADM", "nome": "ADMINISTRAÇÃO", ...}
+    Departamentos: {"672": "CAMPUS UNB CEILÂNDIA: FACULDADE..."}
 """
 
 import json
@@ -35,6 +44,10 @@ def ler_jsonl(arquivo_jsonl: str) -> List[Dict[str, Any]]:
             for linha_num, linha in enumerate(arquivo, 1):
                 linha = linha.strip()
                 if linha:  # Ignora linhas vazias
+                    # Remove vírgula no final se existir (comum em alguns formatos JSONL)
+                    if linha.endswith(','):
+                        linha = linha[:-1]
+                    
                     try:
                         dados.append(json.loads(linha))
                     except json.JSONDecodeError as e:
@@ -55,6 +68,7 @@ def ler_jsonl(arquivo_jsonl: str) -> List[Dict[str, Any]]:
 def jsonl_para_csv(arquivo_jsonl: str, arquivo_csv: str = None) -> str:
     """
     Converte um arquivo JSONL para CSV
+    Detecta automaticamente o formato e aplica a conversão apropriada
     
     Args:
         arquivo_jsonl: Caminho para o arquivo JSONL de entrada
@@ -75,6 +89,14 @@ def jsonl_para_csv(arquivo_jsonl: str, arquivo_csv: str = None) -> str:
         print("Nenhum dado encontrado no arquivo JSONL")
         return None
     
+    # Detectar se é arquivo de departamentos
+    if detectar_tipo_departamentos(dados):
+        print("Detectado formato de departamentos - convertendo com estrutura apropriada...")
+        return converter_departamentos_para_csv(arquivo_jsonl, arquivo_csv)
+    
+    # Formato padrão para cursos e outros dados estruturados
+    print("Detectado formato padrão - convertendo...")
+    
     # Extrair todas as chaves únicas dos dados
     todas_chaves = set()
     for item in dados:
@@ -86,7 +108,7 @@ def jsonl_para_csv(arquivo_jsonl: str, arquivo_csv: str = None) -> str:
     # Escrever arquivo CSV
     try:
         with open(arquivo_csv, 'w', newline='', encoding='utf-8') as arquivo:
-            escritor = csv.DictWriter(arquivo, fieldnames=colunas)
+            escritor = csv.DictWriter(arquivo, fieldnames=colunas, delimiter=';')
             
             # Escrever cabeçalho
             escritor.writeheader()
@@ -98,6 +120,88 @@ def jsonl_para_csv(arquivo_jsonl: str, arquivo_csv: str = None) -> str:
         print(f"Arquivo CSV criado com sucesso: {arquivo_csv}")
         print(f"Total de registros processados: {len(dados)}")
         print(f"Colunas: {', '.join(colunas)}")
+        
+        return str(arquivo_csv)
+        
+    except Exception as e:
+        print(f"Erro ao escrever arquivo CSV: {e}")
+        return None
+
+
+def detectar_tipo_departamentos(dados: List[Dict[str, Any]]) -> bool:
+    """
+    Detecta se os dados seguem o formato de departamentos
+    (objetos com chave numérica única apontando para nome do departamento)
+    
+    Args:
+        dados: Lista de dicionários dos dados
+        
+    Returns:
+        True se for formato de departamentos, False caso contrário
+    """
+    if not dados:
+        return False
+    
+    # Verifica se cada item tem exatamente uma chave e se a chave é numérica
+    for item in dados[:5]:  # Verifica os primeiros 5 itens
+        if len(item) != 1:
+            return False
+        chave = list(item.keys())[0]
+        if not chave.isdigit():
+            return False
+    
+    return True
+
+
+def converter_departamentos_para_csv(arquivo_jsonl: str, arquivo_csv: str = None) -> str:
+    """
+    Converte arquivo JSONL de departamentos para CSV com formato legível
+    Transforma {"672": "CAMPUS UNB CEILÂNDIA: FACULDADE..."} em
+    CSV com colunas: id_departamento, nome_departamento
+    
+    Args:
+        arquivo_jsonl: Caminho para o arquivo JSONL de entrada
+        arquivo_csv: Caminho para o arquivo CSV de saída (opcional)
+        
+    Returns:
+        Caminho do arquivo CSV criado
+    """
+    # Se não especificar arquivo de saída, criar baseado no nome do arquivo de entrada
+    if not arquivo_csv:
+        caminho_entrada = Path(arquivo_jsonl)
+        arquivo_csv = caminho_entrada.with_suffix('.csv')
+    
+    # Ler dados do JSONL
+    dados = ler_jsonl(arquivo_jsonl)
+    
+    if not dados:
+        print("Nenhum dado encontrado no arquivo JSONL")
+        return None
+    
+    # Converter para formato de tabela
+    dados_convertidos = []
+    for item in dados:
+        for id_dept, nome_dept in item.items():
+            dados_convertidos.append({
+                'id_departamento': id_dept,
+                'nome_departamento': nome_dept
+            })
+    
+    # Escrever arquivo CSV
+    try:
+        with open(arquivo_csv, 'w', newline='', encoding='utf-8') as arquivo:
+            escritor = csv.DictWriter(arquivo, fieldnames=['id_departamento', 'nome_departamento'], delimiter=';')
+            
+            # Escrever cabeçalho
+            escritor.writeheader()
+            
+            # Escrever dados
+            for item in dados_convertidos:
+                escritor.writerow(item)
+                
+        print(f"Arquivo CSV de departamentos criado com sucesso: {arquivo_csv}")
+        print(f"Total de departamentos processados: {len(dados_convertidos)}")
+        print(f"Colunas: id_departamento, nome_departamento")
         
         return str(arquivo_csv)
         
@@ -188,6 +292,18 @@ Exemplos:
     else:
         print("\nFalha na conversão")
         sys.exit(1)
+
+    # Verificar se é um arquivo de departamentos e converter se necessário
+    dados = ler_jsonl(arquivo_entrada)
+    if detectar_tipo_departamentos(dados):
+        print("\nFormato de departamentos detectado.")
+        resultado_dept = converter_departamentos_para_csv(arquivo_entrada, arquivo_saida)
+        
+        if resultado_dept:
+            print(f"Conversão de departamentos concluída com sucesso!")
+        else:
+            print("Falha na conversão de departamentos")
+            sys.exit(1)
 
 
 if __name__ == "__main__":
