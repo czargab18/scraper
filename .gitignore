@@ -1,5 +1,6 @@
 ######## IGNORAR
 /.venv/
+*cache*
 
 ######## NÃO IGNORAR
 !/.gitignore
