@@ -435,7 +435,7 @@ class DocentesPaginasSpider(scrapy.Spider):
 
     def __init__(self):
         # Pasta para salvar HTMLs
-        self.paginas_dir = Path("data/docentes/paginas_html")
+        self.paginas_dir = Path("temp/docentes/paginas_html")
         self.paginas_dir.mkdir(parents=True, exist_ok=True)
 
         self.total_docentes = 0
@@ -521,7 +521,7 @@ class DocentesCompletoSpider(scrapy.Spider):
     name = "docentes_completo"
 
     def __init__(self):
-        self.paginas_dir = Path("data/docentes/paginas_html")
+        self.paginas_dir = Path("temp/docentes/paginas_html")
         self.processados = 0
 
         self.logger.info(
@@ -655,7 +655,7 @@ class DocentesOrquestradorSpider(scrapy.Spider):
     def __init__(self):
         # Configurar pastas
         self.temp_dir = Path("temp/current_dept")
-        self.paginas_dir = Path("data/docentes/paginas_html")
+        self.paginas_dir = Path("temp/docentes/paginas_html")
         self.processed_dir = Path("temp/processed")
         self.temp_dir.mkdir(parents=True, exist_ok=True)
         self.paginas_dir.mkdir(parents=True, exist_ok=True)
