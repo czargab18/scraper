@@ -26,8 +26,11 @@ class CursoSpider(scrapy.Spider):
             if departamento_cell:
                 # É uma linha de departamento
                 departamento_atual = departamento_cell.strip()
-                sigla_departamento_atual = departamento_atual.split(" - ")[0]
-                self.logger.info(f"🏢 Processando departamento: {departamento_atual}")
+                # Extrair sigla do departamento (parte antes do " - ")
+                if " - " in departamento_atual:
+                    sigla_departamento_atual = departamento_atual.split(" - ")[0]
+                
+                self.logger.info(f"🏢 Processando departamento: {departamento_atual} (Sigla: {sigla_departamento_atual})")
                 continue
             
             # Verificar se é uma linha de curso
