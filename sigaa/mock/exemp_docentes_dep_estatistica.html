@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" class=" ext-strict"><head>
+	<meta http-equiv="Pragma" content="no-cache">
+	<title>SIGAA - Sistema Integrado de Gestão de Atividades Acadêmicas</title>
+	<link class="component" href="/sigaa/a4j/s/3_3_3.Finalorg/richfaces/renderkit/html/css/basic_classes.xcss/DATB/eAF7sqpgb-jyGdIAFrMEaw__.jsf" rel="stylesheet" type="text/css"><link class="component" href="/sigaa/a4j/s/3_3_3.Finalorg/richfaces/renderkit/html/css/extended_classes.xcss/DATB/eAF7sqpgb-jyGdIAFrMEaw__.jsf" rel="stylesheet" type="text/css"><script async="" src="//www.google-analytics.com/analytics.js"></script><script type="text/javascript">window.RICH_FACES_EXTENDED_SKINNING_ON=true;</script><script src="/sigaa/a4j/g/3_3_3.Finalorg/richfaces/renderkit/html/scripts/skinning.js.jsf" type="text/javascript"></script><link rel="shortcut icon" href="/sigaa/img/sigaa.ico">
+	
+	<script type="text/javascript" src="/shared/jsBundles/jawr_loader.js"></script>
+	<script src="/sigaa/javascript/prevenir-duplo-clique.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		JAWR.loader.style('/javascript/ext-2.0.a.1/resources/css/ext-all.css', 'all');
+		JAWR.loader.style('/css/public.css','all');
+	 	JAWR.loader.script('/bundles/js/sigaa_base.js');
+	 	JAWR.loader.script('/bundles/js/ext2_all.js');
+
+	 	
+	</script> <link rel="stylesheet" type="text/css" media="all" href="/shared/cssBundles/gzip_086847611/javascript/ext-2.0.a.1/resources/css/ext-all.css">  <link rel="stylesheet" type="text/css" media="all" href="/shared/cssBundles/gzip_098577918/css/public.css">  <script type="text/javascript" src="/shared/jsBundles/gzip_404685069/bundles/js/sigaa_base.js"> </script>  <script type="text/javascript" src="/shared/jsBundles/gzip_203901949/bundles/js/ext2_all.js"> </script> 
+	<link rel="stylesheet" type="text/css" media="all" href="/sigaa/cssBundles/gzip_787491763/public/css/public.css">
+
+	
+	<link rel="stylesheet" type="text/css" href="/shared/beta/css/font-awesome.css" media="screen">
+	
+	<script src="/shared/javascript/STICookieConsent.js"></script>
+	<script>
+	    document.addEventListener("DOMContentLoaded", () => {
+	    	generateCookieConsentModal("SIGAA", "N&#243;s usamos cookies para melhorar sua experi&#234;ncia de navega&#231;&#227;o no portal. Ao utilizar o %sitename%, voc&#234; concorda com a pol&#237;tica de monitoramento de cookies. Para ter mais informa&#231;&#245;es sobre como isso &#233; feito e como remover, acesse a <a href=%cookie-policy%>Pol&#237;tica de Prote&#231;&#227;o de Dados Pessoais</a>. Para saber como a UnB trata os dados, acesse a <a href=%privacy-policy%> Pol&#237;tica de cookies</a>. Se voc&#234; concorda, clique em %button-text%.", "https://protecaodedados.unb.br", "https://sti.unb.br/doc-politicas");
+	    })
+	</script>
+	
+</head>
+
+<body id="ext-gen6" class=" ext-safari">
+	<div id="container">
+	
+
+	<div id="container-inner">
+
+	<div id="cabecalho">
+		<div id="logo">
+				<a href="/sigaa/public/"> <img src="https://sig.unb.br/shared/img/instituicao/brasao.png"> </a>		
+		</div>
+		<div id="identificacao">
+			<span class="ufrn"> Universidade de Brasília </span>
+			<span class="data">
+				 Brasília, 
+				 04 de Julho de 
+				 2025 
+			</span>
+			<a id="home" href="/sigaa/public/" title="Página inicial" style="width: 450px;"> </a>
+			<div id="menu_info">
+				<ul>
+					<li class="acessibilidade">
+						<a href="https://autenticacao.unb.br/sso-server/login?service=https://sig.unb.br/sigaa/login/cas?acessibilidade=true" alt="Acessível para pessoas com deficiência visual" title="Acessível para pessoas com deficiência visual">
+							Acessível para pessoas com deficiência visual
+						</a>
+					</li>
+					
+					<li class="login">
+						<a href="/sigaa/" alt="Clique aqui para logar-se no SIGAA" title="Clique aqui para logar-se no SIGAA">
+							Login
+						<i class="fa fa-angle-right"></i></a>	
+					</li>
+				</ul>
+			</div>
+			
+		</div>
+		<br clear="all">
+	</div>
+
+
+	<div id="corpo">
+	
+
+
+
+
+    <script type="text/javascript" src="/shared/javascript/prototype.js"></script>
+    <script type="text/javascript">
+        JAWR.loader.script('/bundles/js/scriptaculous.js');
+		JAWR.loader.script('/javascript/ajaxtags/overlibmws.js');
+		JAWR.loader.script('/javascript/ajaxtags/ajaxtags.js');
+		JAWR.loader.style('/javascript/ajaxtags/css/ajaxtags.css');
+     </script> <script type="text/javascript" src="/shared/jsBundles/gzip_96203577/bundles/js/scriptaculous.js"> </script>  <script type="text/javascript" src="/shared/jsBundles/gzip_1945024299/javascript/ajaxtags/overlibmws.js"> </script>  <script type="text/javascript" src="/shared/jsBundles/gzip_258646615/javascript/ajaxtags/ajaxtags.js"> </script>  <link rel="stylesheet" type="text/css" media="screen" href="/shared/cssBundles/gzip_209271150/javascript/ajaxtags/css/ajaxtags.css"> 
+	
+
+
+<h2> Docentes da UnB </h2>
+
+<style>
+	td.foto {
+		padding: 2px 5px;
+	}
+
+	span.nome {
+		display: block;
+		font-weight: bold;
+		line-height: 1.25em;
+		font-size: 1.1em;
+	}
+	span.departamento {
+		display: block;
+	}
+	span.pagina {
+		display: block;
+		margin-top: 10px;
+	}
+
+	span.pagina a {
+		padding-left: 20px;
+		background: url(/sigaa/public/images/docente/icones/perfil.png) no-repeat;
+		color: #D59030;
+	}
+</style>
+
+
+	
+
+	<div class="descricaoOperacao">
+		<!-- Tarefa 11314 Altera&#231;&#227;o em textos de sub-menu (Acad&#234;mico > Docentes) no Portal P&#250;blico do SIGAA -->
+		Nesta página você pode buscar informações acadêmicas de docentes atuantes na UnB. Busque 
+		pelo nome da pessoa ou departamento de lotação.
+	
+	</div>
+
+	
+<form id="form" name="form" method="post" action="/sigaa/public/docente/busca_docentes.jsf" enctype="application/x-www-form-urlencoded">
+<input type="hidden" name="form" value="form">
+
+		
+		<table class="formulario" align="center" width="75%">
+		<caption class="listagem">Informe os critérios de consulta</caption>
+
+			<tbody><tr>
+				<th width="20%">Nome:</th>
+				<td>
+					<input id="form:nome" type="text" name="form:nome" style="width:75%">
+				</td>
+			</tr>
+			<tr>
+				<th>Departamento:</th>
+				<td>
+					<select id="form:departamento" name="form:departamento" size="1" style="width:95%">	<option value="0" selected="selected"> -- TODOS -- </option>
+	<option value="672">CAMPUS UNB CEILÂNDIA: FACULDADE DE CIENCIAS E TECNOLOGIAS EM SAÚDE - BRASÍLIA</option>
+	<option value="673">CAMPUS UNB GAMA: FACULDADE DE CIÊNCIAS E TECNOLOGIAS EM ENGENHARIA - BRASÍLIA</option>
+	<option value="640">CENTRO DE DESENVOLVIMENTO SUSTENTÁVEL - BRASÍLIA</option>
+	<option value="314">CENTRO DE EXCELÊNCIA EM TURISMO - BRASÍLIA</option>
+	<option value="650">CENTRO ESTUDOS AVANÇADOS MULTIDISCIPLIN - BRASÍLIA</option>
+	<option value="316">CENTRO INTEGRADO ORDENAMENTO TERRITORIAL - BRASÍLIA</option>
+	<option value="1448">CENTRO INTERNACIONAL DE BIOÉTICA E HUMANIDADES - BRASÍLIA</option>
+	<option value="677">CENTRO UNB CERRADO - BRASÍLIA</option>
+	<option value="130">DECANATO DE ENSINO DE GRADUACAO / DEG - BRASÍLIA</option>
+	<option value="170">DECANATO DE PÓS-GRADUAÇÃO / DPG - BRASÍLIA</option>
+	<option value="158">DECANATO EXTENSÃO - BRASÍLIA</option>
+	<option value="351">DEPARTAMENTO DE AUDIOVISUAIS E PUBLICIDADE/DAP - BRASÍLIA</option>
+	<option value="345">DEPARTAMENTO DE COMUNICAÇÃO ORGANIZACIONAL/COM - BRASÍLIA</option>
+	<option value="660">DEPARTAMENTO DE DESIGN (11.01.01.14.04) - BRASÍLIA</option>
+	<option value="449">DEPARTAMENTO DE ENGENHARIA MECANICA - BRASÍLIA</option>
+	<option value="479">DEPARTAMENTO DE ESTUDOS LATINO AMERICANO - BRASÍLIA</option>
+	<option value="678">DEPARTAMENTO DE FARMACIA - BRASÍLIA</option>
+	<option value="791">DEPARTAMENTO DE GESTAO DE POLITICAS PUBL - BRASÍLIA</option>
+	<option value="352">DEPARTAMENTO DE JORNALISMO/JOR - BRASÍLIA</option>
+	<option value="518">DEPARTAMENTO DE MATEMÁTICA - BRASÍLIA</option>
+	<option value="390">DEPARTAMENTO DE MÉTODOS E TÉCNICAS - BRASÍLIA</option>
+	<option value="391">DEPARTAMENTO DE POLÍTICAS PÚBLICAS E GESTÃO DA EDUCAÇÃO - BRASÍLIA</option>
+	<option value="592">DEPARTAMENTO DE PSICOLOGIA CLÍNICA - BRASÍLIA</option>
+	<option value="483">DEPARTAMENTO DE SOCIOLOGIA - BRASÍLIA</option>
+	<option value="392">DEPARTAMENTO DE TEORIA E FUNDAMENTOS - BRASÍLIA</option>
+	<option value="327">DEPTO ADMINISTRAÇÃO - BRASÍLIA</option>
+	<option value="481">DEPTO ANTROPOLOGIA - BRASÍLIA</option>
+	<option value="492">DEPTO ARTES CÊNICAS - BRASÍLIA</option>
+	<option value="498">DEPTO ARTES VISUAIS - BRASÍLIA</option>
+	<option value="464">DEPTO BIOLOGIA CELULAR - BRASÍLIA</option>
+	<option value="462">DEPTO BOTÂNICA - BRASÍLIA</option>
+	<option value="333">DEPTO CIÊNCIAS CONTÁBEIS ATUARIAIS - BRASÍLIA</option>
+	<option value="508">DEPTO CIÊNCIAS DA COMPUTAÇÃO - BRASÍLIA</option>
+	<option value="466">DEPTO CIÊNCIAS FISIOLÓGICAS - BRASÍLIA</option>
+	<option value="337">DEPTO CIÊNCIAS INFORMAÇÃO DOCUMENTAÇÃO - BRASÍLIA</option>
+	<option value="467">DEPTO ECOLOGIA - BRASÍLIA</option>
+	<option value="548">DEPTO ECONOMIA - BRASÍLIA</option>
+	<option value="422">DEPTO ENFERMAGEM - BRASÍLIA</option>
+	<option value="437">DEPTO ENGENHARIA CIVIL E AMBIENTAL - BRASÍLIA</option>
+	<option value="760">DEPTO ENGENHARIA DE PRODUCAO - BRASÍLIA</option>
+	<option value="443">DEPTO ENGENHARIA ELETRICA - BRASÍLIA</option>
+	<option value="433">DEPTO ENGENHARIA FLORESTAL - BRASÍLIA</option>
+	<option value="514">DEPTO ESTATÍSTICA - BRASÍLIA</option>
+	<option value="552">DEPTO FILOSOFIA - BRASÍLIA</option>
+	<option value="469">DEPTO FITOPATOLOGIA - BRASÍLIA</option>
+	<option value="471">DEPTO GENÉTICA E MORFOLOGIA - BRASÍLIA</option>
+	<option value="555">DEPTO GEOGRAFIA - BRASÍLIA</option>
+	<option value="539">DEPTO GEOLOGIA GERAL APLICADA - BRASÍLIA</option>
+	<option value="541">DEPTO GEOQUÍMICA E RECURSOS MINERAIS - BRASÍLIA</option>
+	<option value="559">DEPTO HISTÓRIA - BRASÍLIA</option>
+	<option value="578">DEPTO LINGUISTICA, PORT. LING. CLASSICAS - BRASÍLIA</option>
+	<option value="574">DEPTO LÍNGUAS ESTRANGEIRAS E TRADUÇÃO - BRASÍLIA</option>
+	<option value="540">DEPTO MINERALOGIA E PETROLOGIA - BRASÍLIA</option>
+	<option value="495">DEPTO MÚSICA - BRASÍLIA</option>
+	<option value="424">DEPTO NUTRICAO - BRASÍLIA</option>
+	<option value="427">DEPTO ODONTOLOGIA - BRASÍLIA</option>
+	<option value="594">DEPTO PROCESSOS PSICOLÓGICOS BÁSICOS - BRASÍLIA</option>
+	<option value="360">DEPTO PROJETOS EXPRES REPRES ARQ E URBAN - BRASÍLIA</option>
+	<option value="593">DEPTO PSICOLOGIA ESCOLAR DESENVOLVIMENTO - BRASÍLIA</option>
+	<option value="596">DEPTO PSICOLOGIA SOCIAL E DO TRABALHO - BRASÍLIA</option>
+	<option value="420">DEPTO SAUDE COLETIVA - BRASÍLIA</option>
+	<option value="563">DEPTO SERVIÇO SOCIAL - BRASÍLIA</option>
+	<option value="361">DEPTO TECNOLOGIA ARQUITETURA URBANISMO - BRASÍLIA</option>
+	<option value="362">DEPTO TEORIA HISTORIA ARQUIT E URBANISM - BRASÍLIA</option>
+	<option value="580">DEPTO TEORIA LITERÁRIA E LITERATURA - BRASÍLIA</option>
+	<option value="472">DEPTO ZOOLOGIA - BRASÍLIA</option>
+	<option value="643">DIRETORIA DO CENTRO DE APOIO AO DESENVOLVIMENTO TECNOLÓGICO - BRASÍLIA</option>
+	<option value="363">FACULDADE DE AGRONOMIA E MEDICINA VETERINÁRIA - BRASÍLIA</option>
+	<option value="353">FACULDADE DE ARQUITETURA E URBANISMO - BRASÍLIA</option>
+	<option value="674">FACULDADE DE CIÊNCIA DA INFORMAÇÃO - BRASÍLIA</option>
+	<option value="410">FACULDADE DE CIÊNCIAS DA SAÚDE - BRASÍLIA</option>
+	<option value="343">FACULDADE DE COMUNICAÇÃO - BRASÍLIA</option>
+	<option value="370">FACULDADE DE DIREITO - BRASÍLIA</option>
+	<option value="381">FACULDADE DE EDUCAÇÃO - BRASÍLIA</option>
+	<option value="393">FACULDADE DE EDUCAÇÃO FÍSICA - BRASÍLIA</option>
+	<option value="402">FACULDADE DE MEDICINA - BRASÍLIA</option>
+	<option value="666">FACULDADE DE PLANALTINA - BRASÍLIA</option>
+	<option value="429">FACULDADE DE TECNOLOGIA - BRASÍLIA</option>
+	<option value="323">FACULDADE ECONOMIA,  ADMINISTRAÇÃO,  CONTABILIDADE E  GEST POL PÚBLICAS - BRASÍLIA</option>
+	<option value="288">HOSP-HOSPITAL UNIVERSITÁRIO DE BRASÍLIA - BRASÍLIA</option>
+	<option value="485">INSTITUTO DE ARTES - BRASÍLIA</option>
+	<option value="668">INSTITUTO DE CIÊNCIA POLÍTICA - BRASÍLIA</option>
+	<option value="455">INSTITUTO DE CIÊNCIAS BIOLÓGICAS - BRASÍLIA</option>
+	<option value="504">INSTITUTO DE CIÊNCIAS EXATAS - BRASÍLIA</option>
+	<option value="544">INSTITUTO DE CIÊNCIAS HUMANAS - BRASÍLIA</option>
+	<option value="473">INSTITUTO DE CIÊNCIAS SOCIAIS - BRASÍLIA</option>
+	<option value="524">INSTITUTO DE FÍSICA - BRASÍLIA</option>
+	<option value="533">INSTITUTO DE GEOCIÊNCIAS - BRASÍLIA</option>
+	<option value="567">INSTITUTO DE LETRAS - BRASÍLIA</option>
+	<option value="583">INSTITUTO DE PSICOLOGIA - BRASÍLIA</option>
+	<option value="610">INSTITUTO DE QUÍMICA - BRASÍLIA</option>
+	<option value="669">INSTITUTO DE RELAÇÕES INTERNACIONAIS - BRASÍLIA</option>
+	<option value="542">OBSERVATÓRIO SISMOLÓGICO - BRASÍLIA</option>
+	<option value="1080">PARQUE CIENTÍFICO E TECNOLÓGICO DA UNB - BRASÍLIA</option>
+	<option value="1615">PARQUE DE INOVAÇÃO E SUSTENTABILIDADE DO AMBIENTE CONSTRUÍDO - BRASÍLIA</option>
+	<option value="69">REITORIA - BRASÍLIA</option>
+	<option value="140">SECRETARIA DE ADMINISTRACAO ACADEMICA - BRASÍLIA</option>
+</select>
+				</td>
+			</tr>
+			
+		</tbody><tfoot>
+			<tr>
+				<td colspan="3">
+					<input id="form:buscar" type="submit" name="form:buscar" value="Buscar">&nbsp;
+					<input id="form:cancelar" type="submit" name="form:cancelar" value="Cancelar">
+				</td>
+			</tr>
+		</tfoot>
+		</table>
+	<input type="hidden" name="javax.faces.ViewState" id="javax.faces.ViewState" value="j_id3">
+</form>
+
+	
+		<br>
+		<table class="listagem" style="width: 75%;">
+			<caption> Docentes encontrados (33) </caption>
+			<tbody>
+				
+
+				
+				<tr class="linhaPar topo">
+					<td class="foto">
+						
+							<img src="https://arquivos.unb.br/arquivos/2021012081eb7d2230853b628759bf609/alan_foto_USA2.png" height="100">
+						
+						
+					</td>
+					<td><br>
+						<span class="nome">ALAN RICARDO DA SILVA</span>
+						<span class="departamento"> DEPTO ESTATÍSTICA </span>
+						<span class="pagina">
+							<a href="/sigaa/public/docente/portal.jsf?siape=2487190" title="Clique aqui para acessar a página pública deste docente">
+								ver página pública
+							</a>
+						</span>
+					</td>
+				</tr>
+				
+
+				
+				<tr class="linhaImpar topo">
+					<td class="foto">
+						
+							<img src="https://arquivos.unb.br/arquivos/20241370879d7931079386520319f18b5/foto_Ana_Maria_jun2023.jpeg" height="100">
+						
+						
+					</td>
+					<td><br>
+						<span class="nome">ANA MARIA NOGALES VASCONCELOS</span>
+						<span class="departamento"> DEPTO ESTATÍSTICA </span>
+						<span class="pagina">
+							<a href="/sigaa/public/docente/portal.jsf?siape=404700" title="Clique aqui para acessar a página pública deste docente">
+								ver página pública
+							</a>
+						</span>
+					</td>
+				</tr>
+				
+
+				
+				<tr class="linhaPar topo">
+					<td class="foto">
+						
+							<img src="https://arquivos.unb.br/arquivos/2020081126154c2046175078bd8915da0/eu.jpg" height="100">
+						
+						
+					</td>
+					<td><br>
+						<span class="nome">ANDRE LUIZ FERNANDES CANCADO</span>
+						<span class="departamento"> DEPTO ESTATÍSTICA </span>
+						<span class="pagina">
+							<a href="/sigaa/public/docente/portal.jsf?siape=1465423" title="Clique aqui para acessar a página pública deste docente">
+								ver página pública
+							</a>
+						</span>
+					</td>
+				</tr>
+				
+
+				
+				<tr class="linhaImpar topo">
+					<td class="foto">
+						
+						
+							<img src="/sigaa/img/no_picture.png" height="100">
+						
+					</td>
+					<td><br>
+						<span class="nome">ANTONIO EDUARDO GOMES</span>
+						<span class="departamento"> DEPTO ESTATÍSTICA </span>
+						<span class="pagina">
+							<a href="/sigaa/public/docente/portal.jsf?siape=1040312" title="Clique aqui para acessar a página pública deste docente">
+								ver página pública
+							</a>
+						</span>
+					</td>
+				</tr>
+				
+
+				
+				<tr class="linhaPar topo">
+					<td class="foto">
+						
+							<img src="https://arquivos.unb.br/arquivos/2020003185979a20479843c5af0b0f7da/foto_cira.jpg" height="100">
+						
+						
+					</td>
+					<td><br>
+						<span class="nome">CIRA ETHEOWALDA GUEVARA OTINIANO</span>
+						<span class="departamento"> DEPTO ESTATÍSTICA </span>
+						<span class="pagina">
+							<a href="/sigaa/public/docente/portal.jsf?siape=2279025" title="Clique aqui para acessar a página pública deste docente">
+								ver página pública
+							</a>
+						</span>
+					</td>
+				</tr>
+				
+
+				
+				<tr class="linhaImpar topo">
+					<td class="foto">
+						
+						
+							<img src="/sigaa/img/no_picture.png" height="100">
+						
+					</td>
+					<td><br>
+						<span class="nome">DEMERSON ANDRE POLLI</span>
+						<span class="departamento"> DEPTO ESTATÍSTICA </span>
+						<span class="pagina">
+							<a href="/sigaa/public/docente/portal.jsf?siape=1715224" title="Clique aqui para acessar a página pública deste docente">
+								ver página pública
+							</a>
+						</span>
+					</td>
+				</tr>
+				
+
+				
+				<tr class="linhaPar topo">
+					<td class="foto">
+						
+						
+							<img src="/sigaa/img/no_picture.png" height="100">
+						
+					</td>
+					<td><br>
+						<span class="nome">DONALD MATTHEW PIANTO</span>
+						<span class="departamento"> DEPTO ESTATÍSTICA </span>
+						<span class="pagina">
+							<a href="/sigaa/public/docente/portal.jsf?siape=1645880" title="Clique aqui para acessar a página pública deste docente">
+								ver página pública
+							</a>
+						</span>
+					</td>
+				</tr>
+				
+
+				
+				<tr class="linhaImpar topo">
+					<td class="foto">
+						
+							<img src="https://arquivos.unb.br/arquivos/20230520822802296431702ae9e641ebb/foto3x4.jpeg" height="100">
+						
+						
+					</td>
+					<td><br>
+						<span class="nome">EDUARDO MONTEIRO DE CASTRO GOMES</span>
+						<span class="departamento"> DEPTO ESTATÍSTICA </span>
+						<span class="pagina">
+							<a href="/sigaa/public/docente/portal.jsf?siape=1707052" title="Clique aqui para acessar a página pública deste docente">
+								ver página pública
+							</a>
+						</span>
+					</td>
+				</tr>
+				
+
+				
+				<tr class="linhaPar topo">
+					<td class="foto">
+						
+							<img src="https://arquivos.unb.br/arquivos/202013022180012044044cf1f9ba7fd5b/DSC07769.JPG" height="100">
+						
+						
+					</td>
+					<td><br>
+						<span class="nome">EDUARDO YOSHIO NAKANO</span>
+						<span class="departamento"> DEPTO ESTATÍSTICA </span>
+						<span class="pagina">
+							<a href="/sigaa/public/docente/portal.jsf?siape=1373189" title="Clique aqui para acessar a página pública deste docente">
+								ver página pública
+							</a>
+						</span>
+					</td>
+				</tr>
+				
+
+				
+				<tr class="linhaImpar topo">
+					<td class="foto">
+						
+							<img src="https://arquivos.unb.br/arquivos/2022245082a790255014094445d33446b/D8DBEE63-B048-478C-B67D-5E23D97A1EE6.JPG" height="100">
+						
+						
+					</td>
+					<td><br>
+						<span class="nome">FELIPE SOUSA QUINTINO</span>
+						<span class="departamento"> DEPTO ESTATÍSTICA </span>
+						<span class="pagina">
+							<a href="/sigaa/public/docente/portal.jsf?siape=1269981" title="Clique aqui para acessar a página pública deste docente">
+								ver página pública
+							</a>
+						</span>
+					</td>
+				</tr>
+				
+
+				
+				<tr class="linhaPar topo">
+					<td class="foto">
+						
+							<img src="https://arquivos.unb.br/arquivos/2024151201e05d306156365adb2214907/20231219_160732.jpg" height="100">
+						
+						
+					</td>
+					<td><br>
+						<span class="nome">FREDERICO MACHADO ALMEIDA</span>
+						<span class="departamento"> DEPTO ESTATÍSTICA </span>
+						<span class="pagina">
+							<a href="/sigaa/public/docente/portal.jsf?siape=1145677" title="Clique aqui para acessar a página pública deste docente">
+								ver página pública
+							</a>
+						</span>
+					</td>
+				</tr>
+				
+
+				
+				<tr class="linhaImpar topo">
+					<td class="foto">
+						
+						
+							<img src="/sigaa/img/no_picture.png" height="100">
+						
+					</td>
+					<td><br>
+						<span class="nome">GEORGE FREITAS VON BORRIES</span>
+						<span class="departamento"> DEPTO ESTATÍSTICA </span>
+						<span class="pagina">
+							<a href="/sigaa/public/docente/portal.jsf?siape=1127617" title="Clique aqui para acessar a página pública deste docente">
+								ver página pública
+							</a>
+						</span>
+					</td>
+				</tr>
+				
+
+				
+				<tr class="linhaPar topo">
+					<td class="foto">
+						
+							<img src="https://arquivos.unb.br/arquivos/2023004040dddd275760311a179c709be/Gladston_RJ.JPG" height="100">
+						
+						
+					</td>
+					<td><br>
+						<span class="nome">GLADSTON LUIZ DA SILVA</span>
+						<span class="departamento"> DEPTO ESTATÍSTICA </span>
+						<span class="pagina">
+							<a href="/sigaa/public/docente/portal.jsf?siape=2866456" title="Clique aqui para acessar a página pública deste docente">
+								ver página pública
+							</a>
+						</span>
+					</td>
+				</tr>
+				
+
+				
+				<tr class="linhaImpar topo">
+					<td class="foto">
+						
+							<img src="https://arquivos.unb.br/arquivos/2020022103a9b020414552c06fb09de42/Foto_perfil.jpeg" height="100">
+						
+						
+					</td>
+					<td><br>
+						<span class="nome">GUILHERME SOUZA RODRIGUES</span>
+						<span class="departamento"> DEPTO ESTATÍSTICA </span>
+						<span class="pagina">
+							<a href="/sigaa/public/docente/portal.jsf?siape=3000020" title="Clique aqui para acessar a página pública deste docente">
+								ver página pública
+							</a>
+						</span>
+					</td>
+				</tr>
+				
+
+				
+				<tr class="linhaPar topo">
+					<td class="foto">
+						
+						
+							<img src="/sigaa/img/no_picture.png" height="100">
+						
+					</td>
+					<td><br>
+						<span class="nome">GUSTAVO LEONEL GILARDONI AVALLE</span>
+						<span class="departamento"> DEPTO ESTATÍSTICA </span>
+						<span class="pagina">
+							<a href="/sigaa/public/docente/portal.jsf?siape=1171033" title="Clique aqui para acessar a página pública deste docente">
+								ver página pública
+							</a>
+						</span>
+					</td>
+				</tr>
+				
+
+				
+				<tr class="linhaImpar topo">
+					<td class="foto">
+						
+						
+							<img src="/sigaa/img/no_picture.png" height="100">
+						
+					</td>
+					<td><br>
+						<span class="nome">HELTON SAULO BEZERRA DOS SANTOS</span>
+						<span class="departamento"> DEPTO ESTATÍSTICA </span>
+						<span class="pagina">
+							<a href="/sigaa/public/docente/portal.jsf?siape=1071560" title="Clique aqui para acessar a página pública deste docente">
+								ver página pública
+							</a>
+						</span>
+					</td>
+				</tr>
+				
+
+				
+				<tr class="linhaPar topo">
+					<td class="foto">
+						
+							<img src="https://arquivos.unb.br/arquivos/2023076184d1e527362895160de63ac9b/unnamed.jpg" height="100">
+						
+						
+					</td>
+					<td><br>
+						<span class="nome">JAMES MATOS SAMPAIO</span>
+						<span class="departamento"> DEPTO ESTATÍSTICA </span>
+						<span class="pagina">
+							<a href="/sigaa/public/docente/portal.jsf?siape=2531979" title="Clique aqui para acessar a página pública deste docente">
+								ver página pública
+							</a>
+						</span>
+					</td>
+				</tr>
+				
+
+				
+				<tr class="linhaImpar topo">
+					<td class="foto">
+						
+							<img src="https://arquivos.unb.br/arquivos/2020028199949e2052699ee22ff0ce5ef/IMG_6239e.jpg" height="100">
+						
+						
+					</td>
+					<td><br>
+						<span class="nome">JOANLISE MARCO DE LEON ANDRADE</span>
+						<span class="departamento"> DEPTO ESTATÍSTICA </span>
+						<span class="pagina">
+							<a href="/sigaa/public/docente/portal.jsf?siape=2713895" title="Clique aqui para acessar a página pública deste docente">
+								ver página pública
+							</a>
+						</span>
+					</td>
+				</tr>
+				
+
+				
+				<tr class="linhaPar topo">
+					<td class="foto">
+						
+						
+							<img src="/sigaa/img/no_picture.png" height="100">
+						
+					</td>
+					<td><br>
+						<span class="nome">JOSE ANGELO BELLONI</span>
+						<span class="departamento"> DEPTO ESTATÍSTICA </span>
+						<span class="pagina">
+							<a href="/sigaa/public/docente/portal.jsf?siape=404985" title="Clique aqui para acessar a página pública deste docente">
+								ver página pública
+							</a>
+						</span>
+					</td>
+				</tr>
+				
+
+				
+				<tr class="linhaImpar topo">
+					<td class="foto">
+						
+							<img src="https://arquivos.unb.br/arquivos/2021004028b69321078054214335149e1/IMG_20200314_203201_331.jpg" height="100">
+						
+						
+					</td>
+					<td><br>
+						<span class="nome">JOSE AUGUSTO FIORUCCI</span>
+						<span class="departamento"> DEPTO ESTATÍSTICA </span>
+						<span class="pagina">
+							<a href="/sigaa/public/docente/portal.jsf?siape=3000126" title="Clique aqui para acessar a página pública deste docente">
+								ver página pública
+							</a>
+						</span>
+					</td>
+				</tr>
+				
+
+				
+				<tr class="linhaPar topo">
+					<td class="foto">
+						
+						
+							<img src="/sigaa/img/no_picture.png" height="100">
+						
+					</td>
+					<td><br>
+						<span class="nome">JULIANA BETINI FACHINI GOMES</span>
+						<span class="departamento"> DEPTO ESTATÍSTICA </span>
+						<span class="pagina">
+							<a href="/sigaa/public/docente/portal.jsf?siape=1804045" title="Clique aqui para acessar a página pública deste docente">
+								ver página pública
+							</a>
+						</span>
+					</td>
+				</tr>
+				
+
+				
+				<tr class="linhaImpar topo">
+					<td class="foto">
+						
+						
+							<img src="/sigaa/img/no_picture.png" height="100">
+						
+					</td>
+					<td><br>
+						<span class="nome">LEANDRO TAVARES CORREIA</span>
+						<span class="departamento"> DEPTO ESTATÍSTICA </span>
+						<span class="pagina">
+							<a href="/sigaa/public/docente/portal.jsf?siape=2330775" title="Clique aqui para acessar a página pública deste docente">
+								ver página pública
+							</a>
+						</span>
+					</td>
+				</tr>
+				
+
+				
+				<tr class="linhaPar topo">
+					<td class="foto">
+						
+							<img src="https://arquivos.unb.br/arquivos/20241860040a1430437159e4aea383630/WhatsApp_Image_2024-02-23_at_15.01.34.jpeg" height="100">
+						
+						
+					</td>
+					<td><br>
+						<span class="nome">LUCAS MOREIRA</span>
+						<span class="departamento"> DEPTO ESTATÍSTICA </span>
+						<span class="pagina">
+							<a href="/sigaa/public/docente/portal.jsf?siape=1643419" title="Clique aqui para acessar a página pública deste docente">
+								ver página pública
+							</a>
+						</span>
+					</td>
+				</tr>
+				
+
+				
+				<tr class="linhaImpar topo">
+					<td class="foto">
+						
+						
+							<img src="/sigaa/img/no_picture.png" height="100">
+						
+					</td>
+					<td><br>
+						<span class="nome">LUIS GUSTAVO DO AMARAL VINHA</span>
+						<span class="departamento"> DEPTO ESTATÍSTICA </span>
+						<span class="pagina">
+							<a href="/sigaa/public/docente/portal.jsf?siape=2655121" title="Clique aqui para acessar a página pública deste docente">
+								ver página pública
+							</a>
+						</span>
+					</td>
+				</tr>
+				
+
+				
+				<tr class="linhaPar topo">
+					<td class="foto">
+						
+						
+							<img src="/sigaa/img/no_picture.png" height="100">
+						
+					</td>
+					<td><br>
+						<span class="nome">MARIA TERESA LEAO COSTA</span>
+						<span class="departamento"> DEPTO ESTATÍSTICA </span>
+						<span class="pagina">
+							<a href="/sigaa/public/docente/portal.jsf?siape=403773" title="Clique aqui para acessar a página pública deste docente">
+								ver página pública
+							</a>
+						</span>
+					</td>
+				</tr>
+				
+
+				
+				<tr class="linhaImpar topo">
+					<td class="foto">
+						
+						
+							<img src="/sigaa/img/no_picture.png" height="100">
+						
+					</td>
+					<td><br>
+						<span class="nome">PETER ZORNIG</span>
+						<span class="departamento"> DEPTO ESTATÍSTICA </span>
+						<span class="pagina">
+							<a href="/sigaa/public/docente/portal.jsf?siape=2204554" title="Clique aqui para acessar a página pública deste docente">
+								ver página pública
+							</a>
+						</span>
+					</td>
+				</tr>
+				
+
+				
+				<tr class="linhaPar topo">
+					<td class="foto">
+						
+							<img src="https://arquivos.unb.br/arquivos/2020038118657f2053905a7b4fe35232b/20181224_174521_2.jpg" height="100">
+						
+						
+					</td>
+					<td><br>
+						<span class="nome">RAUL YUKIHIRO MATSUSHITA</span>
+						<span class="departamento"> DEPTO ESTATÍSTICA </span>
+						<span class="pagina">
+							<a href="/sigaa/public/docente/portal.jsf?siape=1171224" title="Clique aqui para acessar a página pública deste docente">
+								ver página pública
+							</a>
+						</span>
+					</td>
+				</tr>
+				
+
+				
+				<tr class="linhaImpar topo">
+					<td class="foto">
+						
+							<img src="https://arquivos.unb.br/arquivos/20201541911b902054466bc7c254c708e/me.jpg" height="100">
+						
+						
+					</td>
+					<td><br>
+						<span class="nome">ROBERTO VILA GABRIEL</span>
+						<span class="departamento"> DEPTO ESTATÍSTICA </span>
+						<span class="pagina">
+							<a href="/sigaa/public/docente/portal.jsf?siape=2357165" title="Clique aqui para acessar a página pública deste docente">
+								ver página pública
+							</a>
+						</span>
+					</td>
+				</tr>
+				
+
+				
+				<tr class="linhaPar topo">
+					<td class="foto">
+						
+							<img src="https://arquivos.unb.br/arquivos/2023102080cd5a2701072295a85e88e5e/file.jpg" height="100">
+						
+						
+					</td>
+					<td><br>
+						<span class="nome">TEREZINHA KESSIA DE ASSIS RIBEIRO</span>
+						<span class="departamento"> DEPTO ESTATÍSTICA </span>
+						<span class="pagina">
+							<a href="/sigaa/public/docente/portal.jsf?siape=3264192" title="Clique aqui para acessar a página pública deste docente">
+								ver página pública
+							</a>
+						</span>
+					</td>
+				</tr>
+				
+
+				
+				<tr class="linhaImpar topo">
+					<td class="foto">
+						
+						
+							<img src="/sigaa/img/no_picture.png" height="100">
+						
+					</td>
+					<td><br>
+						<span class="nome">THAIS CARVALHO VALADARES RODRIGUES</span>
+						<span class="departamento"> DEPTO ESTATÍSTICA </span>
+						<span class="pagina">
+							<a href="/sigaa/public/docente/portal.jsf?siape=1953590" title="Clique aqui para acessar a página pública deste docente">
+								ver página pública
+							</a>
+						</span>
+					</td>
+				</tr>
+				
+
+				
+				<tr class="linhaPar topo">
+					<td class="foto">
+						
+						
+							<img src="/sigaa/img/no_picture.png" height="100">
+						
+					</td>
+					<td><br>
+						<span class="nome">BERNARDO BORBA DE ANDRADE</span>
+						<span class="departamento"> DEPTO ESTATÍSTICA </span>
+						<span class="pagina">
+							<a href="/sigaa/public/docente/portal.jsf?siape=2696020" title="Clique aqui para acessar a página pública deste docente">
+								ver página pública
+							</a>
+						</span>
+					</td>
+				</tr>
+				
+
+				
+				<tr class="linhaImpar topo">
+					<td class="foto">
+						
+						
+							<img src="/sigaa/img/no_picture.png" height="100">
+						
+					</td>
+					<td><br>
+						<span class="nome">ERITON BARROS DOS SANTOS</span>
+						<span class="departamento"> DEPTO ESTATÍSTICA </span>
+						<span class="pagina">
+							<a href="/sigaa/public/docente/portal.jsf?siape=3389836" title="Clique aqui para acessar a página pública deste docente">
+								ver página pública
+							</a>
+						</span>
+					</td>
+				</tr>
+				
+
+				
+				<tr class="linhaPar topo">
+					<td class="foto">
+						
+							<img src="https://arquivos.unb.br/arquivos/202302211837772828018e6cab8756ce4/IMG_1098.jpeg" height="100">
+						
+						
+					</td>
+					<td><br>
+						<span class="nome">NICOLLAS STEFAN SOARES DA COSTA</span>
+						<span class="departamento"> DEPTO ESTATÍSTICA </span>
+						<span class="pagina">
+							<a href="/sigaa/public/docente/portal.jsf?siape=3229474" title="Clique aqui para acessar a página pública deste docente">
+								ver página pública
+							</a>
+						</span>
+					</td>
+				</tr>
+				
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="3" align="center"> <b>33 docentes encontrados </b></td>
+				</tr>
+			</tfoot>
+		</table>
+	
+
+
+<br>
+	
+	
+	
+	<div class="clear"></div>
+	</div>
+
+	<div id="rodape">
+		<p>	
+			SIGAA | Secretaria de Tecnologia da Informação - STI - (61)  3107-0102 | Copyright © 2006-2025 - UFRN - app11.sigaa11
+			 
+				<a onclick="javascript:versao();">v4.15.10.2</a>
+			
+		</p>
+	</div>
+
+	<!-- Fim dos containers -->
+	</div>
+	</div>
+	
+
+
+
+
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	
+	  ga('create', '0', 'auto');
+	  ga('send', 'pageview');
+	
+	</script>	
+
+
+<!-- MYFACES JAVASCRIPT -->
+
+
+
+
+
+ 
+	<script type="text/javascript" charset="UTF-8">
+		function versao(){
+			var msg='';
+			msg+='SIGAA 4.15.10.2,  publicado em: 03/07/2025 10:52\n\n';
+			msg+='Depend\u00eancias:\n';
+			msg+='Arquitetura 4.4.9\n';
+			msg+='Entidades Comuns 2.3.12-SNAPSHOT\n';
+			msg+='Servicos Integrados 2.0.8\n';
+			msg+='SharedResources 2.1.4\n';
+			msg+='Servicos Remoto Biblioteca null\n';
+			msg+='SIGAA Mobile Objects 1.0.0\n\n';
+			msg+='Copyright SINFO/UFRN';
+			alert(msg);
+		}	
+	</script>
+
+<style>
+a.linkMobile:link {
+	color: #003395;
+	font-weight: bold;
+	font-size: inherit;
+	text-decoration: none;
+}
+
+a.linkMobile:visited {
+	color: #003390;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+a.linkMobile:active {
+	color: #444444;
+	text-decoration: none;
+	font-weight: bold;
+}
+</style>
+
+</body></html>
