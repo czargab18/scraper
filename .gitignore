@@ -1,6 +1,9 @@
 ######## IGNORAR
 /.venv/
 *cache*
+**/temp/
+**/mock/
 
 ######## NÃO IGNORAR
+!**/data/
 !/.gitignore
