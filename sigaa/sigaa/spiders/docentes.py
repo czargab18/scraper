@@ -111,11 +111,9 @@ class DocentesSpider(scrapy.Spider):
         # Salvar em arquivo temporário
         arquivo_temp = self.temp_dir / f"dept_{departamento_id}.html"
         with open(arquivo_temp, 'w', encoding='utf-8') as f:
-            f.write(f"""<!DOCTYPE html>
-<html><head><meta charset="UTF-8"></head><body>
-<!-- Departamento: {departamento_nome} (ID: {departamento_id}) -->
-{tabela_html}
-</body></html>""")
+            f.write(f"""<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body>
+                    <!-- Departamento: {departamento_nome} (ID: {departamento_id}) -->{tabela_html}
+                    </body></html>""")
 
         self.logger.info(f"💾 HTML salvo: {arquivo_temp.name}")
 
@@ -225,7 +223,6 @@ class DocentesSpider(scrapy.Spider):
                 arquivo.unlink()
         except Exception as e:
             self.logger.warning(f"⚠️ Erro ao limpar pasta: {e}")
-
 
 class DocentesConteudoSpider(scrapy.Spider):
     name = "docentes_conteudo"
