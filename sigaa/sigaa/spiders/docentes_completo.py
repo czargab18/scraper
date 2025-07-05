@@ -1,4 +1,9 @@
 # cd sigaa
+# 
+# === COMANDO PRINCIPAL (TUDO EM UM) ===
+# uv run scrapy runspider .\sigaa\spiders\docentes_completo.py -o data\docentes\docentes_test.jsonl
+#
+# === COMANDOS INDIVIDUAIS (OPCIONAIS) ===
 # uv run scrapy crawl departamentos -o data/departamentos/lista_departamentos.jsonl
 # uv run scrapy crawl docentes_paginas -o data/docentes/paginas_baixadas.jsonl  
 # uv run scrapy crawl docentes_completo -o data/docentes/docentes_completo.jsonl
@@ -384,3 +389,271 @@ class DocentesCompletoSpider(scrapy.Spider):
         self.logger.info(f"📊 PROCESSAMENTO CONCLUÍDO:")
         self.logger.info(f"   ✅ Docentes processados: {self.processados}")
         self.logger.info(f"   💾 Arquivo final: data/docentes/docentes_completo.jsonl")
+
+
+# ================================================================================
+# CLASSE PRINCIPAL: ORQUESTRADOR COMPLETO (Para runspider)
+# ================================================================================
+
+class DocentesOrquestradorSpider(scrapy.Spider):
+    """
+    Spider principal que executa todas as 3 etapas em sequência:
+    1. Lista departamentos (se necessário)
+    2. Coleta docentes por departamento 
+    3. Baixa páginas individuais
+    4. Extrai dados completos
+    
+    USO: uv run scrapy runspider .\sigaa\spiders\docentes_completo.py -o data\docentes\docentes_test.jsonl
+    """
+    name = "docentes_orquestrador"
+    allowed_domains = ["sigaa.unb.br"]
+    start_urls = ["https://sigaa.unb.br/sigaa/public/docente/busca_docentes.jsf"]
+    
+    custom_settings = {
+        'DOWNLOAD_DELAY': 2,
+        'CONCURRENT_REQUESTS': 1,
+        'CONCURRENT_REQUESTS_PER_DOMAIN': 1,
+        'AUTOTHROTTLE_ENABLED': True,
+        'AUTOTHROTTLE_START_DELAY': 2,
+        'AUTOTHROTTLE_MAX_DELAY': 5,
+        'AUTOTHROTTLE_TARGET_CONCURRENCY': 1.0,
+    }
+
+    def __init__(self):
+        # Configurar pastas
+        self.temp_dir = Path("temp/current_dept")
+        self.paginas_dir = Path("data/docentes/paginas_html")
+        self.temp_dir.mkdir(parents=True, exist_ok=True)
+        self.paginas_dir.mkdir(parents=True, exist_ok=True)
+        
+        # Controle do processo
+        self.departamentos_fila = []
+        self.departamento_atual = 0
+        self.docentes_coletados = []
+        self.total_docentes_processados = 0
+        self.indice_download_atual = 0
+        
+        # Limpeza inicial
+        self._limpar_temp()
+        
+        self.logger.info("🚀 ORQUESTRADOR INICIADO - Processo completo em uma execução")
+        self.logger.info("📋 Etapas: Departamentos → Docentes → Páginas → Extração")
+
+    def _limpar_temp(self):
+        """Limpa arquivos temporários"""
+        try:
+            for arquivo in self.temp_dir.glob("*.html"):
+                arquivo.unlink()
+        except Exception:
+            pass
+
+    def parse(self, response):
+        """ETAPA 1: Coleta departamentos e inicia processo sequencial"""
+        self.logger.info("📋 ETAPA 1: Coletando departamentos...")
+        
+        departamentos = response.css("select#form\\:departamento option")
+        
+        for opcao in departamentos:
+            valor = opcao.attrib.get("value")
+            texto = opcao.css("::text").get()
+
+            if valor and valor not in ["", "0"]:
+                self.departamentos_fila.append({
+                    'id': valor,
+                    'nome': texto.strip()
+                })
+        
+        total_departamentos = len(self.departamentos_fila)
+        self.logger.info(f"📊 Departamentos encontrados: {total_departamentos}")
+        
+        # Iniciar coleta do primeiro departamento
+        if self.departamentos_fila:
+            first_request = self.processar_departamento_atual(response)
+            if first_request:
+                yield first_request
+
+    def processar_departamento_atual(self, response):
+        """ETAPA 2: Processa departamento atual"""
+        if self.departamento_atual >= len(self.departamentos_fila):
+            # Todos os departamentos processados, iniciar download de páginas
+            self.logger.info(f"📊 Coleta de departamentos concluída. Iniciando download de páginas...")
+            # Retornar primeiro request de download
+            return self.criar_primeiro_request_download()
+        
+        dept = self.departamentos_fila[self.departamento_atual]
+        posicao = self.departamento_atual + 1
+        total = len(self.departamentos_fila)
+        
+        self.logger.info(f"📥 ETAPA 2: [{posicao}/{total}] Processando: {dept['nome']}")
+        
+        return scrapy.FormRequest.from_response(
+            response,
+            formname='form',
+            formdata={
+                'form:departamento': dept['id'],
+                'form:buscar': 'Buscar'
+            },
+            callback=self.coletar_docentes_departamento,
+            meta={
+                'departamento': dept,
+                'response_original': response
+            }
+        )
+
+    def criar_primeiro_request_download(self):
+        """Cria o primeiro request para download de páginas"""
+        total_docentes = len(self.docentes_coletados)
+        self.logger.info(f"📥 ETAPA 3: Baixando {total_docentes} páginas de docentes...")
+        
+        if not self.docentes_coletados:
+            self.logger.warning("❌ Nenhum docente coletado para download")
+            return None
+        
+        # Inicializar contador de downloads
+        self.indice_download_atual = 0
+        
+        # Retornar primeiro request
+        primeiro_docente = self.docentes_coletados[0]
+        link_pagina = primeiro_docente.get("link_pagina")
+        
+        if link_pagina:
+            url = f"https://sigaa.unb.br{link_pagina}" if link_pagina.startswith("/") else link_pagina
+            
+            return scrapy.Request(
+                url=url,
+                callback=self.baixar_e_processar_pagina,
+                meta={
+                    "docente": primeiro_docente,
+                    "posicao": 1,
+                    "total": total_docentes
+                },
+                dont_filter=True
+            )
+        
+        return None
+
+    def coletar_docentes_departamento(self, response):
+        """Coleta docentes do departamento atual"""
+        departamento = response.meta['departamento']
+        response_original = response.meta['response_original']
+        
+        # Verificar se há resultados
+        tabela_resultados = response.css("table.listagem")
+        if not tabela_resultados:
+            self.logger.info(f"❌ Nenhum docente em: {departamento['nome']}")
+            self.departamento_atual += 1
+            yield self.processar_departamento_atual(response_original)
+            return
+        
+        # Extrair docentes
+        linhas_docentes = response.css("table.listagem tbody tr")
+        total_docentes = len(linhas_docentes)
+        self.logger.info(f"👥 Encontrados {total_docentes} docentes em {departamento['nome']}")
+
+        for linha in linhas_docentes:
+            nome = linha.css("td:nth-child(2) span.nome::text").get()
+
+            if nome:
+                link_pagina = linha.css("td:nth-child(2) span.pagina a::attr(href)").get()
+                
+                siape = None
+                if link_pagina and "siape=" in link_pagina:
+                    siape = link_pagina.split("siape=")[1].split("&")[0]
+
+                docente_info = {
+                    'codigo_departamento': departamento['id'],
+                    'departamento': departamento['nome'],
+                    'nome_docente': nome.strip(),
+                    'siape': siape,
+                    'link_pagina': link_pagina,
+                    'processamento': 'orquestrador_completo'
+                }
+                
+                self.docentes_coletados.append(docente_info)
+        
+        # Avançar para próximo departamento
+        self.departamento_atual += 1
+        next_request = self.processar_departamento_atual(response_original)
+        if next_request:
+            yield next_request
+
+    def baixar_e_processar_pagina(self, response):
+        """ETAPA 4: Baixa página e extrai dados completos diretamente"""
+        docente = response.meta["docente"]
+        posicao = response.meta["posicao"]
+        total = response.meta["total"]
+        
+        siape = docente.get("siape", "unknown")
+        nome = docente.get("nome_docente", "N/A")
+        
+        self.logger.info(f"⚙️ ETAPA 4: [{posicao}/{total}] Processando: {nome}")
+        
+        # Salvar HTML temporariamente (opcional, para debug)
+        arquivo_temp = self.temp_dir / f"temp_{siape}.html"
+        with open(arquivo_temp, "w", encoding="utf-8") as f:
+            f.write(response.text)
+        
+        # Extrair dados usando funções fixas
+        dados_extraidos = extrair_dados_perfil_docente(response)
+        
+        # Extrair dados do Lattes
+        script_content = response.css("script:contains('var curriculo')::text").get()
+        if script_content:
+            dados_lattes = extrair_dados_curriculo_lattes(script_content)
+            if dados_lattes:
+                dados_extraidos["curriculo_lattes_dados"] = dados_lattes
+        
+        # Combinar dados
+        dados_completos = {
+            **docente,  # Dados originais da coleta
+            **dados_extraidos,  # Dados extraídos da página
+            "url_acessada": response.url,
+            "timestamp_processamento": time.time(),
+            "status_processamento": "sucesso_completo"
+        }
+        
+        # Limpar arquivo temporário
+        try:
+            arquivo_temp.unlink()
+        except:
+            pass
+        
+        self.total_docentes_processados += 1
+        self.logger.info(f"✅ [{self.total_docentes_processados}] Concluído: {dados_completos.get('nome_completo', nome)}")
+        
+        yield dados_completos
+        
+        # Verificar se há próximo docente para processar
+        if hasattr(self, 'indice_download_atual'):
+            self.indice_download_atual += 1
+            
+            if self.indice_download_atual < len(self.docentes_coletados):
+                # Criar request para próximo docente
+                proximo_docente = self.docentes_coletados[self.indice_download_atual]
+                link_pagina = proximo_docente.get("link_pagina")
+                
+                if link_pagina:
+                    url = f"https://sigaa.unb.br{link_pagina}" if link_pagina.startswith("/") else link_pagina
+                    
+                    yield scrapy.Request(
+                        url=url,
+                        callback=self.baixar_e_processar_pagina,
+                        meta={
+                            "docente": proximo_docente,
+                            "posicao": self.indice_download_atual + 1,
+                            "total": len(self.docentes_coletados)
+                        },
+                        dont_filter=True
+                    )
+
+    def closed(self, reason):
+        """Estatísticas finais"""
+        self.logger.info(f"🎉 PROCESSO ORQUESTRADOR CONCLUÍDO!")
+        self.logger.info(f"📊 Estatísticas finais:")
+        self.logger.info(f"   🏢 Departamentos processados: {self.departamento_atual}")
+        self.logger.info(f"   👥 Docentes coletados: {len(self.docentes_coletados)}")
+        self.logger.info(f"   ✅ Páginas processadas: {self.total_docentes_processados}")
+        self.logger.info(f"   🏁 Motivo de encerramento: {reason}")
+        
+        # Limpeza final
+        self._limpar_temp()
