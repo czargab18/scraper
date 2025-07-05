@@ -3,6 +3,8 @@
 *cache*
 **/temp/
 **/mock/
+**/paginas_html/
+**/docente_*.html
 
 ######## NÃO IGNORAR
 !**/data/
