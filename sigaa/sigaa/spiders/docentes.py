@@ -1,5 +1,5 @@
 # cd sigaa
-# uv run scrapy runspider .\sigaa\spiders\docentes.py -o data\docentes\docentes.json
+# uv run scrapy runspider .\sigaa\spiders\docentes.py -o data\docentes\docentes.jsonl
 import scrapy
 import os
 from pathlib import Path
