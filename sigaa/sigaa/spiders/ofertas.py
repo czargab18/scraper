@@ -6,23 +6,26 @@ class OfertasSpider(scrapy.Spider):
     allowed_domains = ["sigaa.unb.br"]
 
     def start_requests(self):
-        # Simula o envio do formulário preenchido
         file_url = f"file://{os.path.abspath(os.path.join(os.path.dirname(__file__), '../../mock/ofertas.html'))}"
-        # Parâmetros de exemplo, ajuste conforme necessário
-        formdata = {
-            'formTurma': 'formTurma',
-            'formTurma:inputNivel': 'G',
-            'formTurma:inputDepto': '518',
-            'formTurma:inputAno': '2025',
-            'formTurma:inputPeriodo': '2',
-            'formTurma:j_id_jsp_1370969402_11': 'Buscar',
-        }
-        # scrapy.FormRequest espera dict[str, str] ou dict[str, list[str]]
-        yield scrapy.FormRequest(
-            url=file_url,
-            formdata={k: [v] for k, v in formdata.items()},
-            callback=self.parse
-        )
+        if file_url.startswith("file://"):
+            yield scrapy.Request(
+                url=file_url,
+                callback=self.parse
+            )
+        else:
+            formdata = {
+                'formTurma': 'formTurma',
+                'formTurma:inputNivel': 'G',
+                'formTurma:inputDepto': '518',
+                'formTurma:inputAno': '2025',
+                'formTurma:inputPeriodo': '2',
+                'formTurma:j_id_jsp_1370969402_11': 'Buscar',
+            }
+            yield scrapy.FormRequest(
+                url=file_url,
+                formdata=formdata,
+                callback=self.parse
+            )
 
     def parse(self, response):
         agrupadores = response.css('tr.agrupador')
