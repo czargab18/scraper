@@ -5,7 +5,13 @@ import os
 class OfertasSpider(scrapy.Spider):
     name = "ofertas"
     allowed_domains = ["sigaa.unb.br"]
-
+    start_urls = [
+        "https://sigaa.unb.br/sigaa/public/turmas/listar.jsf?aba=p-ensino"]
+    
+    custom_settings = {
+        'DOWNLOAD_DELAY': 1,
+        'CONCURRENT_REQUESTS': 1,
+    }
     def start_requests(self):
         import csv
         departamentos_path = os.path.abspath(os.path.join(os.path.dirname(

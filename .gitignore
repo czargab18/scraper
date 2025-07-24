@@ -3,7 +3,7 @@
 /renv/
 *cache*
 **/temp/
-**/mock/
+**/mock/*
 **/paginas_html/
 **/docente_*.html
 
