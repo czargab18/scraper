@@ -45,7 +45,7 @@ class OfertasSpider(scrapy.Spider):
             'formTurma:inputNivel': '',
             'formTurma:inputDepto': depto_id,
             'formTurma:inputAno': '2025',
-            'formTurma:inputPeriodo': '1',
+            'formTurma:inputPeriodo': '2',
             'javax.faces.ViewState': viewstate or '',
             'formTurma:j_id_jsp_1370969402_11': 'Buscar',
         }
@@ -70,7 +70,7 @@ class OfertasSpider(scrapy.Spider):
 mock_dir = os.path.abspath(os.path.join(
     os.path.dirname(__file__), '..', '..', 'mock'))
 saida_jsonl = os.path.abspath(os.path.join(os.path.dirname(
-    __file__), '..', '..', 'data', 'ofertas', '2025-1.jsonl'))
+    __file__), '..', '..', 'data', 'ofertas', '2025-2.jsonl'))
 
 with open(saida_jsonl, 'w', encoding='utf-8') as fout:
     for html_path in glob.glob(os.path.join(mock_dir, 'ofertas_*.html')):
