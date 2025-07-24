@@ -53,20 +53,11 @@ class OfertasSpider(scrapy.Spider):
         )
 
     def parse(self, response):
-        departamento = response.meta.get('departamento', '')
         id_departamento = response.meta.get('id_departamento', '')
-        for row in response.css('div#turmasAbertas table.listagem tbody tr'):
-            codigo = row.css('td.turma::text').get()
-            if not codigo:
-                continue
-            yield {
-                'departamento': departamento,
-                'id_departamento': id_departamento,
-                'codigo': codigo.strip(),
-                'ano_periodo': row.css('td.anoPeriodo::text').get(default='').strip(),
-                'docente': row.css('td.nome::text').get(default='').strip(),
-                'horario': row.css('td:nth-child(4)::text').get(default='').strip(),
-                'vagas_ofertadas': row.css('td:nth-child(6)::text').get(default='').strip(),
-                'vagas_ocupadas': row.css('td:nth-child(7)::text').get(default='').strip(),
-                'local': row.css('td:nth-child(8)::text').get(default='').strip(),
-            }
+        mock_dir = os.path.abspath(os.path.join(
+            os.path.dirname(__file__), '..', '..', 'mock'))
+        os.makedirs(mock_dir, exist_ok=True)
+        file_path = os.path.join(mock_dir, f'ofertas_{id_departamento}.html')
+        with open(file_path, 'w', encoding='utf-8') as f:
+            f.write(response.text)
+        self.logger.info(f'Página salva: {file_path}')
