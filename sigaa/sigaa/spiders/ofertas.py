@@ -27,7 +27,8 @@ class OfertasSpider(scrapy.Spider):
             yield scrapy.Request(
                 url="https://sigaa.unb.br/sigaa/public/turmas/listar.jsf?aba=p-ensino",
                 callback=self.preencher_formulario,
-                meta=meta
+                meta=meta,
+                dont_filter=True
             )
 
     def preencher_formulario(self, response):
