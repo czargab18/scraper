@@ -22,17 +22,27 @@ class OfertasSpider(scrapy.Spider):
             __file__), '..', '..', 'data', 'unidades', 'departamentos.csv'))
         with open(departamentos_path, encoding='utf-8') as csvfile:
             reader = list(csv.DictReader(csvfile, delimiter=';'))
-        # Faz um GET para obter o ViewState antes de cada POST
-        for row in reader:
-            depto_id = row['id_departamento']
-            meta = {
-                'departamento': row['nome_departamento'], 'id_departamento': depto_id}
-            yield scrapy.Request(
-                url="https://sigaa.unb.br/sigaa/public/turmas/listar.jsf?aba=p-ensino",
-                callback=self.preencher_formulario,
-                meta=meta,
-                dont_filter=True
-            )
+
+        # Defina os anos e semestres desejados
+        anos = ['2025']  # Adapte conforme necessário
+        semestres = ['1', '2', '3', '4']
+
+        for ano in anos:
+            for semestre in semestres:
+                for row in reader:
+                    depto_id = row['id_departamento']
+                    meta = {
+                        'departamento': row['nome_departamento'],
+                        'id_departamento': depto_id,
+                        'ano': ano,
+                        'semestre': semestre
+                    }
+                    yield scrapy.Request(
+                        url="https://sigaa.unb.br/sigaa/public/turmas/listar.jsf?aba=p-ensino",
+                        callback=self.preencher_formulario,
+                        meta=meta,
+                        dont_filter=True
+                    )
 
     def preencher_formulario(self, response):
         import re
@@ -40,12 +50,14 @@ class OfertasSpider(scrapy.Spider):
             'input[name="javax.faces.ViewState"]::attr(value)').get()
         depto_id = response.meta['id_departamento']
         departamento = response.meta['departamento']
+        ano = response.meta['ano']
+        semestre = response.meta['semestre']
         formdata = {
             'formTurma': 'formTurma',
             'formTurma:inputNivel': '',
             'formTurma:inputDepto': depto_id,
-            'formTurma:inputAno': '2025',
-            'formTurma:inputPeriodo': '2',
+            'formTurma:inputAno': ano,
+            'formTurma:inputPeriodo': semestre,
             'javax.faces.ViewState': viewstate or '',
             'formTurma:j_id_jsp_1370969402_11': 'Buscar',
         }
@@ -53,15 +65,23 @@ class OfertasSpider(scrapy.Spider):
             url="https://sigaa.unb.br/sigaa/public/turmas/listar.jsf",
             formdata=formdata,
             callback=self.parse,
-            meta={'departamento': departamento, 'id_departamento': depto_id}
+            meta={
+                'departamento': departamento,
+                'id_departamento': depto_id,
+                'ano': ano,
+                'semestre': semestre
+            }
         )
 
     def parse(self, response):
         id_departamento = response.meta.get('id_departamento', '')
-        mock_dir = os.path.abspath(os.path.join(
-            os.path.dirname(__file__), '..', '..', 'mock'))
-        os.makedirs(mock_dir, exist_ok=True)
-        file_path = os.path.join(mock_dir, f'ofertas_{id_departamento}.html')
+        ano = response.meta.get('ano', '')
+        semestre = response.meta.get('semestre', '')
+        # Cria pasta para ano/semestre
+        base_dir = os.path.abspath(os.path.join(
+            os.path.dirname(__file__), '..', '..', 'mock', ano, semestre))
+        os.makedirs(base_dir, exist_ok=True)
+        file_path = os.path.join(base_dir, f'ofertas_{id_departamento}.html')
         with open(file_path, 'w', encoding='utf-8') as f:
             f.write(response.text)
         self.logger.info(f'Página salva: {file_path}')
